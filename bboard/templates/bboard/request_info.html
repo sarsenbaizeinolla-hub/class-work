@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Информация о запросе</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; color: #333; }
+        h3 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 5px; margin-top: 30px; }
+        .data-item { margin: 5px 0; font-size: 14px; }
+        b { color: #e74c3c; }
+    </style>
+</head>
+<body>
+
+    <h3>GET параметры:</h3>
+    {% for key, value in get_params %}
+        <div class="data-item">{{ key }} = {{ value }}</div>
+    {% empty %}
+        <div class="data-item">Нет данных</div>
+    {% endfor %}
+
+    <h3>POST параметры:</h3>
+    {% for key, value in post_params %}
+        <div class="data-item">{{ key }} = {{ value }}</div>
+    {% empty %}
+        <div class="data-item">Нет данных</div>
+    {% endfor %}
+
+    <h3>МЕТА данные:</h3>
+    {% for key, value in meta_data %}
+        <div class="data-item"><b>{{ key }}</b> = {{ value }}</div>
+    {% endfor %}
+
+</body>
+</html>

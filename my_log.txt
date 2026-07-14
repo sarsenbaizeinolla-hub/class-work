@@ -1,0 +1,139 @@
+INFO:bboard.views:Запрос на проверку логина. Браузер: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.118.1 Chrome/142.0.7444.265 Electron/39.8.8 Safari/537.36
+INFO:bboard.views:Запрос на проверку логина. Браузер: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.118.1 Chrome/142.0.7444.265 Electron/39.8.8 Safari/537.36
+INFO:bboard.views:Запрос на проверку логина. Браузер: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.118.1 Chrome/142.0.7444.265 Electron/39.8.8 Safari/537.36
+INFO:bboard.views:Запрос на проверку логина. Браузер: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.118.1 Chrome/142.0.7444.265 Electron/39.8.8 Safari/537.36
+INFO:bboard.views:Запрос на проверку логина. Браузер: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.118.1 Chrome/142.0.7444.265 Electron/39.8.8 Safari/537.36
+INFO:django.utils.autoreload:C:\Users\LENOVO\Desktop\latest django\bboard\views.py changed, reloading.
+ERROR:django.request:Internal Server Error: /tasks/
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\LENOVO\Desktop\latest django\bboard\views.py", line 17, in task_list
+    return render(request, 'bboard/task_list.html', {'tasks': tasks})
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: bboard/task_list.html
+INFO:django.utils.autoreload:C:\Users\LENOVO\Desktop\latest django\bboard\views.py changed, reloading.
+ERROR:django.request:Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\LENOVO\Desktop\latest django\bboard\views.py", line 12, in home_menu
+    return render(request, 'home.html')
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: home.html
+INFO:django.utils.autoreload:C:\Users\LENOVO\Desktop\latest django\bboard\views.py changed, reloading.
+ERROR:django.request:Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\LENOVO\Desktop\latest django\bboard\views.py", line 12, in home_menu
+    return render(request, 'home.html') # Убедись, что файл называется home.html
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: home.html
+INFO:django.utils.autoreload:C:\Users\LENOVO\Desktop\latest django\bboard\views.py changed, reloading.
+ERROR:django.request:Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\LENOVO\Desktop\latest django\bboard\views.py", line 12, in home_menu
+    return render(request, 'home.html')
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: home.html
+INFO:django.utils.autoreload:C:\Users\LENOVO\Desktop\latest django\bboard\views.py changed, reloading.
+ERROR:django.request:Internal Server Error: /tasks/
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\LENOVO\Desktop\latest django\bboard\views.py", line 18, in task_list
+    return render(request, 'bboard/task_list.html', {'tasks': tasks})
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: bboard/task_list.html
+INFO:django.utils.autoreload:C:\Users\LENOVO\Desktop\latest django\bboard\views.py changed, reloading.
+INFO:django.utils.autoreload:C:\Users\LENOVO\Desktop\latest django\bboard\views.py changed, reloading.
+ERROR:django.request:Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\LENOVO\Desktop\latest django\bboard\views.py", line 12, in home_menu
+    return render(request, 'home.html')
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: home.html
+INFO:django.utils.autoreload:C:\Users\LENOVO\Desktop\latest django\bboard\views.py changed, reloading.
+ERROR:django.request:Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\LENOVO\Desktop\latest django\bboard\views.py", line 12, in home_menu
+    return render(request, 'home.html')
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: home.html
+INFO:django.utils.autoreload:C:\Users\LENOVO\Desktop\latest django\bboard\views.py changed, reloading.
+WARNING:django.request:Not Found: /product/1/
+WARNING:django.request:Not Found: /product/1/
+INFO:django.utils.autoreload:C:\Users\LENOVO\Desktop\latest django\bboard\views.py changed, reloading.
+INFO:django.utils.autoreload:C:\Users\LENOVO\Desktop\latest django\bboard\urls.py changed, reloading.
+ERROR:django.request:Internal Server Error: /tasks/1/
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\LENOVO\Desktop\latest django\bboard\views.py", line 24, in task_detail
+    return render(request, 'task_detail.html', {'task': task})
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\LENOVO\Desktop\latest django\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: task_detail.html
+INFO:django.utils.autoreload:C:\Users\LENOVO\Desktop\latest django\bboard\views.py changed, reloading.

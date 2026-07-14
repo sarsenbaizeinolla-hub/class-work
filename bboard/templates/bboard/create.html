@@ -1,0 +1,6 @@
+<h2>Добавление нового объявления</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Добавить</button>
+</form>

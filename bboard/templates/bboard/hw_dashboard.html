@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 50px; text-align: center; background: #f8fafc; }
+        .welcome-box { background: white; max-width: 500px; margin: 0 auto; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .btn-logout { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #dc2626; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; }
+        .btn-logout:hover { background: #b91c1c; }
+    </style>
+</head>
+<body>
+    <div class="welcome-box">
+        <h1>Добро пожаловать, {{ user.username }}! 🎉</h1>
+        <p>Вы успешно авторизовались в системе разграничения доступа ДЗ №28.</p>
+        <p style="color: #64748b;">Прямо сейчас данные вашей авторизации распечатались в консоль VS Code.</p>
+        <a href="{% url 'hw_logout' %}" class="btn-logout">Выйти из аккаунта</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{% extends "bboard/base.html" %}
+
+{% block title %}О проекте - Задание 23{% endblock %}
+
+{% block content %}
+    <h2>О нашем сервисе</h2>
+    <p>Это страница с использованием наследования шаблонов.</p>
+
+    <!-- Оставляем фильтры из 22 задания, как ты просил -->
+    <div style="border-top: 2px solid #eee; margin-top: 20px; padding-top: 10px;">
+        <h3>Фильтры (Задание 22):</h3>
+        <p>Имя: {{ test_name|upper }}</p>
+        <p>Кратко: {{ test_text|truncatewords:2 }}</p>
+    </div>
+{% endblock %}

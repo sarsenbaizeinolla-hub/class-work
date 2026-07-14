@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная — Список объявлений</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f6f9; margin: 0; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        h1 { color: #2c3e50; text-align: center; }
+        .card { background: white; padding: 15px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .title { color: #2980b9; margin-top: 0; }
+        .price { font-weight: bold; color: #27ae60; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Все объявления (ДЗ №18)</h1>
+        
+        {% for bb in bbs %}
+            <div class="card">
+                <h3 class="title">{{ bb.title }}</h3>
+                <p>{{ bb.content }}</p>
+                <p class="price">Цена: {{ bb.price }} тенге</p>
+            </div>
+        {% empty %}
+            <p style="text-align: center; color: #7f8c8d;">Объявлений пока нет.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+< lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Домашнее задание №22</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f6f9; color: #333; padding: 30px; }
+        .wrapper { max-width: 700px; margin: 0 auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        h1 { color: #2c3e50; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-bottom: 25px; }
+        h3 { color: #2980b9; margin-top: 20px; border-left: 4px solid #3498db; padding-left: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f8f9fa; font-weight: bold; }
+        .badge { background: #27ae60; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.9em; }
+    </style>
+</head>
+<>
+
+<div class="wrapper">
+    <h1>Домашнее задание №22: Теги и Фильтры шаблонов</h1>
+
+    <h3>1. Встроенные фильтры для строк</h3>
+    <table>
+        <tr>
+            <th>Оригинальные данные из Python</th>
+            <th>Примененный фильтр Django</th>
+            <th>Результат в HTML</th>
+        </tr>
+        <tr>
+            <td>{{ student_name }}</td>
+            <td><code>|title</code> (Первые буквы заглавные)</td>
+            <td><strong>{{ student_name|title }}</strong></td>
+        </tr>
+        <tr>
+            <td>{{ project_description }}</td>
+            <td><code>|upper</code> (ВСЕ БУКВЫ ЗАГЛАВНЫЕ)</td>
+            <td>{{ project_description|upper }}</td>
+        </tr>
+        <tr>
+            <td>{{ student_name }}</td>
+            <td><code>|length</code> (Подсчет символов)</td>
+            <td>Длина строки: {{ student_name|length }} знаков</td>
+        </tr>
+    </table>
+
+    <h3>2. Дополнительные фильтры (Дата и Срезы)</h3>
+    <p><strong>Оригинальная дата из базы:</strong> {{ current_date }}</p>
+    <p><strong>Отформатированная дата (фильтр <code>|date</code>):</strong> <span class="badge">{{ current_date|date:"d E Y года в H:i" }}</span></p>
+    
+    <p><strong>Оригинальный текст:</strong> {{ project_description }}</p>
+    <p><strong>Фильтр <code>|slice:":17"</code> (Отрезать первые 17 символов):</strong> {{ project_description|slice:":17" }}...</p>
+
+    <h3>3. Встроенные теги шаблонов (Логика)</h3>
+    
+    <p><strong>Проверка тега if для оценки ({{ score }} баллов):</strong></p>
+    {% if score > 50 %}
+        <p style="color: #27ae60; font-weight: bold;">Отличный результат! Задание выполнено.</p>
+    {% else %}
+        <p style="color: #e74c3c;">Требуется доработка.</p>
+    {% endif %}
+
+    <p><strong>Вывод списка через тег for:</strong></p>
+    <ul>
+        {% for skill in skills_list %}
+            <li>Навык №{{ forloop.counter }}: {{ skill }}</li>
+        {% endfor %}
+    </ul>
+
+    <p><strong>Проверка тега empty на пустом списке:</strong></p>
+    <ul>
+        {% for item in empty_list %}
+            <li>{{ item }}</li>
+        {% empty %}
+            <li style="color: #7f8c8d; font-style: italic;">(Тег сработал: Список элементов полностью пуст)</li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+   
+
+</body>
+</html>

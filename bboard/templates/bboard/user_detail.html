@@ -1,0 +1,32 @@
+{% extends 'bboard/base.html' %}
+
+{% block title %}{{ task.title }}{% endblock %}
+
+{% block content %}
+<style>
+    .detail-box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    .meta { font-size: 0.9em; color: #778ca3; margin-bottom: 20px; border-bottom: 1px solid #f1f2f6; padding-bottom: 10px; }
+    .desc { font-size: 1.1em; line-height: 1.6; color: #4b6584; margin-bottom: 30px; }
+    .back-link { display: inline-block; text-decoration: none; color: #4a69bd; font-weight: bold; }
+    .back-link:hover { text-decoration: underline; }
+</style>
+
+<div class="detail-box">
+    <h2>{{ task.title }}</h2>
+    
+    <div class="meta">
+        <span>Создано: {{ task.created_at|date:"d.m.Y H:i" }}</span> | 
+        <span>Статус: <strong>{% if task.is_completed %}Завершена{% else %}Активна{% endif %}</strong></span>
+    </div>
+
+    <div class="desc">
+        {% if task.description %}
+            {{ task.description }}
+        {% else %}
+            <span style="document_content-style: italic; color: #a5b1c2;">Описание отсутствует.</span>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'task_list' %}" class="back-link">← Вернуться к списку</a>
+</div>
+{% endblock %}

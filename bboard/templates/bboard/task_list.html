@@ -1,0 +1,26 @@
+<nav>
+  <ul>
+    <li><a href="{% url 'task_list' %}">Главная</a></li>
+  </ul>
+</nav>
+
+{% for task in page_obj %}
+  <div>
+    <h3>{{ task.title }} <i class="fas fa-check"></i></h3>
+    <p>{{ task.description }}</p>
+  </div>
+{% endfor %}
+
+<div>
+  {% if page_obj.has_previous %}
+    <a href="?page=1">&laquo; первая</a>
+    <a href="?page={{ page_obj.previous_page_number }}">назад</a>
+  {% endif %}
+
+  <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+
+  {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">вперед</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
+  {% endif %}
+</div>

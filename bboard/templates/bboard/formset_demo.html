@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Практическая работа №27</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f6f9; color: #333; padding: 40px 20px; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 5px; font-size: 24px; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .subtitle { text-align: center; color: #7f8c8d; font-size: 14px; margin-bottom: 30px; }
+        
+        .formset-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .formset-table th { background: #3498db; color: white; padding: 12px; text-align: left; font-size: 14px; }
+        .formset-table td { padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+        
+        .form-control { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+        .btn-save { background: #2ecc71; color: white; padding: 12px 25px; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; display: block; margin: 0 auto; }
+        .btn-save:hover { background: #27ae60; }
+        
+        .badge-info { background: #ebf8ff; color: #2b6cb0; padding: 10px; border-radius: 6px; font-size: 13px; margin-bottom: 20px; border: 1px solid #bee3f8; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Практическая работа №27: Наборы форм</h1>
+    <div class="subtitle">Управление несколькими экземплярами моделей на одной странице</div>
+
+    <div class="badge-info">
+        💡 <strong>Как это работает:</strong> Вы можете редактировать существующие задачи прямо в таблице, заполнить пустые строки внизу для создания новых или поставить галочку "Удалить" для очистки базы данных. Все изменения сохранятся одновременно!
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        {{ formset.management_form }}
+
+        <table class="formset-table">
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Название задачи</th>
+                    <th style="width: 45%;">Описание задачи</th>
+                    <th style="width: 15%;">Завершена</th>
+                    <th style="width: 10%;">Удалить</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for form in formset %}
+                    <tr>
+                        {{ form.id }}
+                        
+                        <td>
+                            {{ form.title }}
+                            {% if form.title.errors %}
+                                <div style="color: red; font-size: 11px;">{{ form.title.errors.0 }}</div>
+                            {% endif %}
+                        </td>
+                        <td>{{ form.description }}</td>
+                        <td style="text-align: center;">{{ form.is_completed }}</td>
+                        <td style="text-align: center; color: red;">
+                            {% if form.instance.pk %}
+                                {{ form.DELETE }}
+                            {% else %}
+                                <span style="color: #cbd5e1; font-size: 12px;">Новая</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn-save">Сохранить все изменения</button>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Практическая работа №24</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; color: #333; padding: 40px 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+        h1 { text-align: center; color: #1e293b; margin-bottom: 5px; font-size: 24px; }
+        .subtitle { text-align: center; color: #64748b; font-size: 14px; margin-bottom: 30px; }
+        .post-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .post-card h3 { margin: 0 0 8px 0; color: #2563eb; }
+        .post-card p { margin: 0; color: #475569; font-size: 14px; }
+        .pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; padding-top: 15px; border-top: 1px solid #e2e8f0; }
+        .btn { background: #2563eb; color: white; padding: 8px 16px; text-decoration: none; border-radius: 6px; font-size: 14px; font-weight: 500; }
+        .btn:hover { background: #1d4ed8; }
+        .btn.disabled { background: #cbd5e1; color: #94a3b8; pointer-events: none; }
+        .page-info { font-size: 14px; color: #64748b; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Практическая работа №24: Пагинатор</h1>
+    <div class="subtitle">Разделение данных на порции вручную (без встроенного Paginator)</div>
+
+    {% for post in posts %}
+        <div class="post-card">
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.body }}</p>
+        </div>
+    {% empty %}
+        <p style="text-align: center; color: #94a3b8;">Постов больше нет.</p>
+    {% endfor %}
+
+    <div class="pagination">
+        {% if has_previous %}
+            <a href="?page={{ prev_page }}" class="btn">« Назад</a>
+        {% else %}
+            <a href="#" class="btn disabled">« Назад</a>
+        {% endif %}
+
+        <span class="page-info">Страница {{ page }} из {{ total_pages }}</span>
+
+        {% if has_next %}
+            <a href="?page={{ next_page }}" class="btn">Вперед »</a>
+        {% else %}
+            <a href="#" class="btn disabled">Вперед »</a>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>

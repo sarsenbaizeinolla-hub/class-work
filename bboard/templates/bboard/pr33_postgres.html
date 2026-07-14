@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Практическая работа №33</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f4f8; color: #1e293b; padding: 30px; }
+        .container { display: flex; gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .card { flex: 1; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #cbd5e1; }
+        h1, h2 { font-size: 20px; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-top: 0; }
+        .db-badge { display: inline-block; padding: 6px 12px; background: #312e81; color: #e0e7ff; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 15px; }
+        .form-group { margin-bottom: 12px; }
+        label { display: block; font-weight: bold; margin-bottom: 4px; font-size: 13px; }
+        input { width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; }
+        .btn-submit { display: block; width: 100%; padding: 10px; background: #16a34a; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .btn-submit:hover { background: #15803d; }
+        .product-item { background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .specs-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+        .specs-table td { padding: 6px; border: 1px solid #e2e8f0; }
+    </style>
+</head>
+<body>
+
+<div style="text-align: center;">
+    <span class="db-badge">🗄️ СУБД: PostgreSQL подключена и активна</span>
+</div>
+
+<div class="container">
+    
+    <div class="card">
+        <h2>➕ Добавить товар на сервер</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn-submit">💾 Сохранить в PostgreSQL</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>📦 Товары в базе данных PostgreSQL</h2>
+        {% if products %}
+            {% for product in products %}
+                <div class="product-item">
+                    <strong>{{ product.title }}</strong> — <span style="color: #2563eb; font-weight: bold;">{{ product.price }} руб.</span>
+                    <table class="specs-table">
+                        {% for key, value in product.specifications.items %}
+                        <tr>
+                            <td style="width: 40%; background: #f1f5f9;"><strong>{{ key }}</strong></td>
+                            <td>{{ value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p style="color: #64748b;">База данных пока пуста. Добавьте первый товар слева!</p>
+        {% endif %}
+    </div>
+
+</div>
+
+</body>
+</html>

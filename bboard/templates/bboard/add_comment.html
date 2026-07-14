@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавить комментарий</title>
+</head>
+<body>
+    <h1>Напишите ваш комментарий</h1>
+    <form method="post">
+        {% csrf_token %}
+        <textarea name="comment_text" placeholder="Введите текст..."></textarea><br><br>
+        <button type="submit">Отправить</button>
+    </form>
+    <br>
+    <a href="{% url 'comment_list' %}">Назад к списку</a>
+</body>
+</html>
