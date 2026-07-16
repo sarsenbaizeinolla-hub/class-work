@@ -1,9 +1,14 @@
-{% extends 'homework29/base.html' %}
-{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Вход</title>
+</head>
+<body>
     <h2>Вход в систему</h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-success">Войти</button>
+        <button type="submit">Войти</button>
     </form>
-{% endblock %}
+</body>
+</html>

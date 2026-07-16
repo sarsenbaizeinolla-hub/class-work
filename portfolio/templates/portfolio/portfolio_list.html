@@ -1,0 +1,47 @@
+{% extends 'homework29/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Мой крипто-портфель</h2>
+    
+    <div class="card p-4 mb-4">
+        <h4>Добавить монету</h4>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Добавить</button>
+        </form>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Монета</th>
+                <th>Кол-во</th>
+                <th>Цена покупки</th>
+                <th>Текущая стоимость</th>
+                <th>PnL</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for asset in assets %}
+            <tr>
+                <td>{{ asset.name }} ({{ asset.symbol|upper }})</td>
+                <td>{{ asset.amount }}</td>
+                <td>${{ asset.buy_price }}</td>
+                <td>${{ asset.current_value|floatformat:2 }}</td>
+                <td class="{% if asset.pnl >= 0 %}text-success{% else %}text-danger{% endif %}">
+                    ${{ asset.pnl|floatformat:2 }}
+                </td>
+                <td>
+                    <a href="{% url 'delete_asset' asset.pk %}" class="btn btn-sm btn-outline-danger">Удалить</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">Портфель пуст. Добавьте первую монету!</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
