@@ -1,31 +1,21 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login as auth_login
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from .models import BookingObject, Booking
+from django.db.models import Q
+from django.core.paginator import Paginator
 
-def index(request):
-    # Рендерит index.html из папки homework29/templates/homework29/
-    return render(request, 'homework29/index.html')
-
-def register(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            auth_login(request, user)
-            return redirect('portfolio')
-    else:
-        form = UserCreationForm()
-    # Рендерит register.html из папки homework29/templates/homework29/registration/
-    return render(request, 'homework29/registration/register.html', {'form': form})
-
-def login_view(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            auth_login(request, user)
-            return redirect('portfolio')
-    else:
-        form = AuthenticationForm()
-    # Рендерит login.html из папки homework29/templates/homework29/registration/
-    return render(request, 'homework29/registration/login.html', {'form': form})
+@login_required
+def booking_list(request):
+    """Список объектов и броней с пагинацией."""
+    objects = BookingObject.objects.all()
+    
+    # Пагинация для броней
+    all_bookings = Booking.objects.all()
+    paginator = Paginator(all_bookings, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    return render(request, 'homework29/booking_list.html', {
+        'objects': objects,
+        'page_obj': page_obj
+    })
