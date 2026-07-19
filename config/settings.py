@@ -5,14 +5,17 @@ import dj_database_url
 # Базовая директория проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Секретный ключ (обязательно используйте переменные окружения на сервере!)
+# Секретный ключ из переменной окружения Render
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-default-key-for-dev-use-only')
 
 # Режим отладки (на сервере должен быть False)
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-# Список разрешенных хостов
+# Домен вашего сайта на Render
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+
+# Настройка безопасности для домена
+CSRF_TRUSTED_ORIGINS = ['https://class-work-9.onrender.com']
 
 # Приложения
 INSTALLED_APPS = [
@@ -22,14 +25,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    # Ваши приложения
     'homework29',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # Для быстрой отдачи статики
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Обязательно для статики на Render
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -59,7 +60,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # База данных
-# На Render используйте PostgreSQL, локально - SQLite
 DATABASES = {
     'default': dj_database_url.config(
         default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
@@ -81,7 +81,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Статические файлы (CSS, JS, изображения)
+# Настройки статики
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -91,3 +91,6 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Важно для работы за прокси на Render
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
