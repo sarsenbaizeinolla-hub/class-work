@@ -1,21 +1,14 @@
 from django.contrib import admin
-from django.urls import path, include
-from homework29.views import index, booking_list, register, login_view, logout_view
+from django.urls import path
+from homework29 import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
-    # Главная страница
-    path('', index, name='index'),
-    
-    # Регистрация и авторизация
-    path('register/', register, name='register'),
-    path('login/', login_view, name='login'),
-    path('logout/', logout_view, name='logout'),
-    
-    # Система бронирования
-    path('bookings/', booking_list, name='booking_list'),
-    
-    # Если остались другие приложения, они остаются как есть:
-    path('portfolio/', include('portfolio.urls')),
+    path('', views.index, name='index'),
+    path('register/', views.register, name='register'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    path('bookings/', views.booking_list, name='booking_list'),
 ]

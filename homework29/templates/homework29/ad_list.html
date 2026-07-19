@@ -1,4 +1,20 @@
 {% extends 'homework29/base.html' %}
 {% block content %}
-<h1>Ура! Главная страница работает!</h1>
+<div class="container py-5">
+    <div class="row">
+        {% for object in objects %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow border-0 rounded-4">
+                <img src="{{ object.image_url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ object.name }}</h5>
+                    <p class="card-text text-muted">{{ object.description }}</p>
+                    <p class="fw-bold text-primary">${{ object.price_per_hour }}/час</p>
+                    <a href="{% url 'booking_list' %}" class="btn btn-primary w-100">Забронировать</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

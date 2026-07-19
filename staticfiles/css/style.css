@@ -1,0 +1,42 @@
+/* Общие настройки для всего сайта */
+body {
+    background: url('/static/car_bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    min-height: 100vh;
+}
+
+/* Контейнер для контента с полупрозрачным фоном */
+.content-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    margin-top: 50px;
+}
+
+/* Стилизация заголовков */
+h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* Настройка кнопок */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Отступы для форм */
+form {
+    margin-top: 20px;
+}
+
+form p {
+    margin-bottom: 15px;
+}
