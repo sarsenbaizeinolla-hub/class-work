@@ -1,23 +1,23 @@
-from pathlib import Path
 import os
+from pathlib import Path
 import dj_database_url
 
-# Базовая директория проекта
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Секретный ключ из переменной окружения Render
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-default-key-for-dev-use-only')
+# QUICK-START DEVELOPMENT SETTINGS - UNSAFE FOR PRODUCTION!
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-default-key-change-me-in-production')
 
-# Режим отладки (на сервере должен быть False)
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+# SECURITY WARNING: don't run with debug turned on in production!
+# На Render DEBUG автоматически выключится, локально будет True
+DEBUG = 'RENDER' not in os.environ
 
-# Домен вашего сайта на Render
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+# Разрешенные хосты для работы на Render и локально
+ALLOWED_HOSTS = ['*']
 
-# Настройка безопасности для домена
-CSRF_TRUSTED_ORIGINS = ['https://class-work-9.onrender.com']
+# Application definition
 
-# Приложения
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -25,13 +25,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Ваше приложение бронирования
+    
+    # Ваши приложения
     'homework29',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # Обязательно для статики на Render
+    # WhiteNoise нужен для красивой раздачи статики на Render (если захотите добавить)
+    # 'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -51,6 +53,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.make_context', # если было, или стандартное
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -60,39 +63,55 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# База данных
-DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
-        conn_max_age=600
-    )
-}
+# Database
+# Автоматическое переключение на базу Render или локальный SQLite
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.config(
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
-# Валидация паролей
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
 ]
 
-# Локализация
+# Internationalization
 LANGUAGE_CODE = 'ru-ru'
-TIME_ZONE = 'UTC'
+
+TIME_ZONE = 'Asia/Almaty'
+
 USE_I18N = True
+
 USE_TZ = True
 
-# Настройки статики
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = 'static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Настройки для логина
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'index'
+# Media files (загружаемые картинки машин и т.д.)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Важно для работы за прокси на Render
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-DEBUG = True
