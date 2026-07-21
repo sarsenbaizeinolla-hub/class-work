@@ -1,12 +1,14 @@
 from django.contrib import admin
-from .models import BookingObject, Booking
+from .models import Booking, BookingObject
+
 
 @admin.register(BookingObject)
 class BookingObjectAdmin(admin.ModelAdmin):
-    # Исправили: было 'price_per_day', а в модели у нас 'price_per_hour'
-    list_display = ('name', 'price_per_hour', 'is_available')
+  list_display = ('name', 'car_type', 'capacity', 'price_per_hour')
+  search_fields = ('name', 'description')
+
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    # Исправили: было 'start_date' и 'end_date', а в модели 'start_time' и 'end_time'
-    list_display = ('user', 'booking_object', 'start_time', 'end_time')
+  list_display = ('booking_object', 'user', 'date', 'start_time', 'end_time')
+  list_filter = ('date', 'booking_object')

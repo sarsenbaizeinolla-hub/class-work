@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Бронирование — {{ room.name }}</title>
+    <style>
+        :root { --bg-dark: #1b2622; --accent: #2e694f; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f4f6f5; color: #333; }
+        header { background: var(--bg-dark); color: #fff; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); }
+        header a { color: #fff; text-decoration: none; font-weight: 500; }
+        
+        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+        
+        .card { background: #fff; border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); margin-bottom: 25px; border: 1px solid #e2e8f0; }
+        
+        .slots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-top: 15px; }
+        .slot { padding: 12px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 14px; border: none; cursor: pointer; }
+        .slot.free { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+        .slot.booked { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; cursor: not-allowed; }
+        
+        .btn-main { background: var(--accent); color: white; padding: 12px 20px; border-radius: 6px; border: none; font-size: 16px; cursor: pointer; font-weight: bold; width: 100%; text-align: center; text-decoration: display; display: block; }
+        .btn-main:hover { background: #23523c; }
+        
+        .date-picker-form { display: flex; gap: 10px; margin-bottom: 20px; align-items: center; }
+        .date-picker-form input { padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="{% url 'index' %}">← На главную к каталогу</a>
+        <span>{{ room.name }}</span>
+    </header>
+
+    <div class="container">
+        <!-- Информация о машине -->
+        <div class="card" style="display: flex; gap: 20px; flex-wrap: wrap;">
+            {% if room.image_url %}
+                <img src="{{ room.image_url }}" alt="{{ room.name }}" style="width: 320px; height: 200px; object-fit: cover; border-radius: 8px;">
+            {% endif %}
+            <div style="flex-grow: 1;">
+                <h2 style="margin-top:0;">{{ room.name }}</h2>
+                <p><strong>Тип:</strong> {{ room.get_car_type_display }} | <strong>Мест:</strong> {{ room.capacity }}</p>
+                <p>{{ room.description }}</p>
+                <p style="font-size: 18px; color: #2e7d32; font-weight: bold;">{{ room.price_per_hour }} ₽ / час &nbsp;|&nbsp; {{ room.price_per_day }} ₽ / день</p>
+            </div>
+        </div>
+
+        <!-- Выбор даты и слотов времени -->
+        <div class="card">
+            <h3>Свободное время на {{ selected_date }}</h3>
+            
+            <form method="get" class="date-picker-form">
+                <input type="date" name="date" value="{{ selected_date|date:'Y-m-d' }}">
+                <button type="submit" style="padding: 10px 15px; background: #4a5568; color: white; border: none; border-radius: 6px; cursor: pointer;">Показать</button>
+            </form>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="slots-grid">
+                    {% for start, end in hours_slots %}
+                        {% if start in booked_times %}
+                            <div class="slot booked">{{ start }}–{{ end }} занято</div>
+                        {% else %}
+                            <button type="submit" name="start_time" value="{{ start }}" class="slot free">{{ start }}–{{ end }} свободно</button>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </form>
+        </div>
+
+        <!-- Блок авторизации для брони -->
+        <div class="card">
+            <h3>Забронировать</h3>
+            {% if request.user.is_authenticated %}
+                <p style="color: #2e7d32; font-weight: 500;">Вы авторизованы как <strong>{{ request.user.username }}</strong>. Нажмите на свободный зеленый слот времени выше, чтобы мгновенно занять автомобиль!</p>
+            {% else %}
+                <p>Бронирование доступно только авторизованным пользователям.</p>
+                <a href="{% url 'login' %}" class="btn-main" style="max-width: 200px; text-align: center;">Войти в аккаунт</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

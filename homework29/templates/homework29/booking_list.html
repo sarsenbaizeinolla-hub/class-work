@@ -1,47 +1,42 @@
-{% extends 'homework29/base.html' %}
-
-{% block content %}
-<div class="container">
-    <h2 class="mb-4 text-primary fw-bold"><i class="fas fa-door-open"></i> Каталог объектов</h2>
-    
-    <div class="row">
-        {% for object in objects %}
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card h-100 shadow-sm border-0 rounded-4">
-                {% if object.image %}
-                    <img src="{{ object.image.url }}" class="card-img-top rounded-top-4" style="height: 200px; object-fit: cover;">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">{{ object.name }}</h5>
-                    <p class="card-text text-muted small">{{ object.description }}</p>
-                    <div class="d-flex justify-content-between mb-3">
-                        <span class="badge bg-primary fs-6">${{ object.price_per_hour }}/час</span>
-                        <span class="badge {% if object.is_available %}bg-success{% else %}bg-danger{% endif %}">
-                            {% if object.is_available %}Доступен{% else %}Занят{% endif %}
-                        </span>
-                    </div>
-                    
-                    {% if object.is_available %}
-                    <button class="btn btn-outline-primary w-100 rounded-pill" data-bs-toggle="collapse" data-bs-target="#book-{{ object.id }}">
-                        <i class="fas fa-calendar-alt"></i> Забронировать
-                    </button>
-                    
-                    <div class="collapse mt-3" id="book-{{ object.id }}">
-                        <form action="{% url 'booking_list' %}" method="POST" class="p-3 bg-light rounded-3">
-                            {% csrf_token %}
-                            <input type="hidden" name="object_id" value="{{ object.id }}">
-                            <label class="small">Начало:</label>
-                            <input type="datetime-local" name="start" class="form-control mb-2" required>
-                            <label class="small">Конец:</label>
-                            <input type="datetime-local" name="end" class="form-control mb-2" required>
-                            <button type="submit" class="btn btn-success w-100">Забронировать</button>
-                        </form>
-                    </div>
-                    {% endif %}
-                </div>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Мои бронирования — Точка роста</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 20px; }
+        .btn { display: inline-block; padding: 8px 15px; background: #007bff; color: #fff; text-decoration: none; border-radius: 4px; }
+        .btn-danger { background: #dc3545; }
+        ul { list-style: none; padding: 0; }
+        li { background: #f1f1f1; margin-bottom: 10px; padding: 12px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Список моих бронирований</h2>
+            <div>
+                <span>Привет, <strong>{{ request.user.username }}</strong>!</span>
+                <a href="{% url 'logout' %}" class="btn btn-danger" style="margin-left: 10px;">Выйти</a>
             </div>
         </div>
-        {% endfor %}
+
+        {% if bookings %}
+            <ul>
+                {% for booking in bookings %}
+                    <li>
+                        <div>
+                            <strong>{{ booking.booking_object.name }}</strong><br>
+                            <small>Дата: {{ booking.date }} | Время: {{ booking.start_time }} - {{ booking.end_time }}</small>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>У вас пока нет активных бронирований.</p>
+        {% endif %}
     </div>
-</div>
-{% endblock %}
+</body>
+</html>

@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Ваше приложение бронирования
     'homework29',
 ]
 
@@ -94,3 +95,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Важно для работы за прокси на Render
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+DEBUG = True
