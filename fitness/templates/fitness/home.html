@@ -1,0 +1,102 @@
+{% extends 'fitness/base.html' %}
+
+{% block title %}Главная — Фитнес Клуб{% endblock %}
+
+{% block content %}
+<!-- Главный баннер с фитнес-фоном -->
+<div class="p-5 mb-5 rounded-3 shadow text-white position-relative overflow-hidden" 
+     style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;">
+    <div class="container-fluid py-5 position-relative">
+        <h1 class="display-4 fw-bold">Твое тело — твои правила</h1>
+        <p class="col-md-8 fs-5 text-light">Достигайте спортивных целей вместе с лучшими тренерами. Выбирайте абонементы, бронируйте тренировки и меняйте жизнь к лучшему.</p>
+        <div class="mt-4">
+            {% if not user.is_authenticated %}
+                <a class="btn btn-danger btn-lg px-4 me-2 fw-bold shadow" href="{% url 'register' %}" role="button">Присоединиться</a>
+                <a class="btn btn-outline-light btn-lg px-4" href="{% url 'login' %}" role="button">Войти</a>
+            {% else %}
+                <a class="btn btn-success btn-lg px-4 me-2 fw-bold shadow" href="{% url 'booking' %}" role="button">Забронировать тренировку</a>
+                <a class="btn btn-outline-light btn-lg px-4" href="{% url 'profile' %}" role="button">Личный кабинет</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Секция тренеров -->
+<div class="container my-5">
+    <div class="row mb-4">
+        <div class="col-md-12 text-center">
+            <h2 class="fw-bold display-6">Наши профессиональные тренеры</h2>
+            <p class="text-muted">Опытные наставники, которые приведут вас к результату</p>
+        </div>
+    </div>
+    
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% if trainers %}
+            {% for trainer in trainers %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+                        {% if trainer.image %}
+                            <img src="{{ trainer.image.url }}" class="card-img-top" alt="{{ trainer.name }}" style="height: 250px; object-fit: cover;">
+                        {% else %}
+                            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Trainer" style="height: 250px; object-fit: cover;">
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title fw-bold">{{ trainer.name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-danger fw-semibold">{{ trainer.specialization }}</h6>
+                            <p class="card-text text-muted small flex-grow-1">{{ trainer.bio|truncatechars:90 }}</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                                <span class="badge bg-dark">Опыт: {{ trainer.experience_years }} лет</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center text-muted">Тренеры скоро появятся.</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Секция абонементов -->
+<div class="container my-5">
+    <div class="row mb-4">
+        <div class="col-md-12 text-center">
+            <h2 class="fw-bold display-6">Выберите свой абонемент</h2>
+            <p class="text-muted">Гибкие тарифные планы для любых задач</p>
+        </div>
+    </div>
+    
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% if subscriptions %}
+            {% for sub in subscriptions %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden border-top border-danger border-4">
+                        {% if sub.image %}
+                            <img src="{{ sub.image.url }}" class="card-img-top" alt="{{ sub.name }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                            <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Subscription" style="height: 200px; object-fit: cover;">
+                        {% endif %}
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div>
+                                <h5 class="card-title fw-bold text-dark">{{ sub.name }}</h5>
+                                <p class="card-text text-muted small">{{ sub.description }}</p>
+                                <div class="fs-4 fw-bold text-danger my-2">{{ sub.price }} ₸</div>
+                                <p class="small text-secondary mb-3"><i class="bi bi-clock"></i> Срок действия: {{ sub.duration_days }} дней</p>
+                            </div>
+                            <div>
+                                {% if user.is_authenticated %}
+                                    <a href="{% url 'buy_subscription' sub.id %}" class="btn btn-danger w-100 fw-bold py-2 shadow-sm">Купить абонемент</a>
+                                {% else %}
+                                    <a href="{% url 'login' %}" class="btn btn-outline-dark w-100 fw-bold py-2">Войти для покупки</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center text-muted">Абонементы скоро появятся.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

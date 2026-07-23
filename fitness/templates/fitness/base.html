@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Фитнес Клуб{% endblock %}</title>
+    <!-- Подключение Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Иконки Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+    <!-- Навигация (Шапка сайта) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-danger" href="{% url 'home' %}">
+                <i class="bi bi-activity"></i> Фитнес Клуб
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'trainers' %}">Тренеры</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'subscriptions' %}">Абонементы</a>
+                    </li>
+                    
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'booking' %}">Забронировать</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'profile' %}">Личный кабинет</a>
+                        </li>
+                        <li class="nav-item ms-lg-3">
+                            <form action="{% url 'logout' %}" method="post" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-light btn-sm">Выйти</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li class="nav-item ms-lg-3">
+                            <a class="btn btn-danger btn-sm px-3 mb-2 mb-lg-0 fw-bold" href="{% url 'register' %}">Регистрация</a>
+                        </li>
+                        <li class="nav-item ms-lg-2">
+                            <a class="btn btn-outline-light btn-sm px-3" href="{% url 'login' %}">Войти</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент страницы -->
+    <main class="container my-4 flex-grow-1">
+        <!-- Вывод системных сообщений (успех, ошибки) -->
+        {% if messages %}
+            <div class="row">
+                <div class="col-12">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Подвал сайта -->
+    <footer class="bg-dark text-white text-center py-4 mt-auto shadow-sm">
+        <div class="container">
+            <p class="mb-1 fw-bold">&copy; 2026 Фитнес Клуб. Все права защищены.</p>
+            <p class="text-muted small mb-0">Твое здоровье — твой главный актив.</p>
+        </div>
+    </footer>
+
+    <!-- Подключение Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

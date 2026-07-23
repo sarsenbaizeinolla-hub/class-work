@@ -3,7 +3,9 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Стандартный вход/выход от Django, чтобы кнопка входа работала
     path(
-        '', include('homework29.urls')
-    ),  # Подключаем все URL из вашего приложения
+        'accounts/', include('django.contrib.auth.urls')
+    ),  # Предоставляет /accounts/login/
+    path('', include('fitness.urls')),
 ]

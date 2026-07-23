@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: fitness-django-app
+    env: python
+    region: frankfurt
+    plan: free
+    buildCommand: "pip install -r requirements.txt && python manage.py migrate"
+    startCommand: "gunicorn latest_django.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.14.3
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: false

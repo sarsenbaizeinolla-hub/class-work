@@ -1,0 +1,59 @@
+{% extends 'fitness/base.html' %}
+
+{% block title %}Личный кабинет{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <h2>Привет, {{ user.first_name|default:user.username }}! 👋</h2>
+        <p class="text-muted">Это ваш личный кабинет со списком абонементов и записей.</p>
+    </div>
+
+    <!-- Активные абонементы -->
+    <div class="col-md-6">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">Мои абонементы</div>
+            <div class="card-body">
+                {% if subscriptions %}
+                    <ul class="list-group">
+                        {% for sub in subscriptions %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>{{ sub.subscription_type.name }}</strong>
+                                    <br><small class="text-muted">Действует до: {{ sub.end_date }}</small>
+                                </div>
+                                <span class="badge bg-success">Активен</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted mb-0">У вас пока нет купленных абонементов. <a href="{% url 'subscriptions' %}">Купить</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Забронированные тренировки -->
+    <div class="col-md-6">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-success text-white">Мои бронирования тренеров</div>
+            <div class="card-body">
+                {% if bookings %}
+                    <ul class="list-group">
+                        {% for b in bookings %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>Тренер: {{ b.trainer.name }}</strong>
+                                    <br><small class="text-muted">Дата: {{ b.date_time }}</small>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted mb-0">Вы еще ничего не забронировали. <a href="{% url 'booking' %}">Записаться</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
